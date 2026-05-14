@@ -1,0 +1,5 @@
+# paper-chat-report core dependencies
+# Install with: pip install -r requirements.txt
+
+# Primary PDF text extraction
+PyMuPDF>=1.23.0

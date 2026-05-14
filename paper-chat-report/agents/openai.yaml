@@ -1,0 +1,26 @@
+interface:
+  display_name: "Paper Chat Report"
+  short_description: "Rewrite a paper-reading dialogue export into a high-quality Chinese paper report"
+  default_prompt: |
+    Use paper-chat-report to generate a standalone Chinese paper report from a role-labeled dialogue export.
+
+    输入材料:
+    - .tmp/analysis/paper-chat-report/<slug>/report-context.md（先读这个）
+    - .tmp/analysis/paper-chat-report/<slug>/teaching-map.md
+    - .tmp/analysis/paper-chat-report/<slug>/equation-cards.json
+    - .tmp/analysis/paper-chat-report/<slug>/paper.txt 或 paper.struct.md
+    - 源对话文件路径在 report-context.md 中已给出
+
+    核心任务:
+    阅读对话源文件，理解论文讲解内容和用户追问，重写为一份独立的中文论文报告。
+
+    写作规则:
+    1. 公式嵌入方法小节，不单独汇总
+    2. 用语义标记 [[FIG:n|description]] 和 [[TAB:n|description]] 标注图表位置
+    3. 相关工作融入 2.2 节，从问题驱动视角展开
+    4. 结构参照 references/report-contract.md
+    5. 中文为主，英文术语保留
+    6. 不保留 You said/ChatGPT said 等聊天痕迹
+    7. **自己识别对话中的追问环节**，将追问解答中的洞见整合到主干叙述
+
+    输出：docs/papers/<slug>.md

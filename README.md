@@ -15,6 +15,29 @@ cd paper-chat-report
 python3 install.py --upgrade
 ```
 
+## 交给 AI 配置
+
+如果你希望把安装和配置直接交给 AI，可以把下面这段话直接发给 Codex / Claude：
+
+```text
+帮我安装这个 skill：git@github.com:HardingPan/paper-chat-report.git
+
+要求：
+1. 如果当前环境已经有 Codex 的 skill-installer，优先直接从 GitHub 安装 `paper-chat-report/` 这个 skill path。
+2. 如果没有可用的 skill-installer，就 clone 仓库后执行 `python3 install.py --upgrade`。
+3. 如果我主要在 Codex 里使用，就优先安装到 `~/.codex/skills`。
+4. 安装完成后，告诉我实际安装路径，并提醒我重启 Codex / Claude。
+5. 如果缺依赖，就一并安装核心依赖；`docling` 先不用装，除非我后面明确要求。
+```
+
+如果你希望 AI 只装到 Codex，也可以直接发这段：
+
+```text
+把 `git@github.com:HardingPan/paper-chat-report.git` 里的 `paper-chat-report` skill 安装到我的 Codex。
+优先用 skill-installer；不行就 clone 仓库并执行 `python3 install.py --target codex --upgrade`。
+装完告诉我安装路径，并提醒我重启 Codex。
+```
+
 如果你已经有 Codex 的 `skill-installer`，也可以直接从 GitHub 安装这个 skill：
 
 ```bash
@@ -31,6 +54,34 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 - 复制后做一次脚本冒烟检查
 
 安装完成后，重启 Codex / Claude 让新 skill 生效。
+
+## 交给 AI 使用
+
+安装完成后，如果你希望 AI 直接用这个 skill 处理论文对话导出，可以把下面这段话直接发给它：
+
+```text
+用 `paper-chat-report` 处理这份 role-labeled markdown 对话导出：`/absolute/path/to/export.md`
+
+要求：
+1. 先初始化 `docs/papers/` 和 `.tmp/analysis/paper-chat-report/` 下的中间产物。
+2. 如果对话同目录下有对应 PDF，优先使用；否则按标题自动解析论文来源。
+3. 优先读取 `report-context.md`、`teaching-map.md`、`equation-cards.json`、`paper.txt` / `paper.struct.md` 来组织成稿。
+4. 最终输出一份独立的中文论文报告到 `docs/papers/<slug>.md`，不要保留 transcript 痕迹。
+5. 完成后运行校验；如果需要，顺手再生成一个 `-enhanced.md` 的语雀版本。
+```
+
+如果你已经有原论文 PDF，也可以直接发更明确的版本：
+
+```text
+用 `paper-chat-report` 处理这份对话导出：`/absolute/path/to/export.md`
+原论文 PDF 在：`/absolute/path/to/paper.pdf`
+
+请你：
+1. 先跑中间产物抽取。
+2. 再按 `report-context.md` 和 `references/report-contract.md` 写最终报告。
+3. 输出到 `docs/papers/<slug>.md`。
+4. 最后运行校验，确保结构通过。
+```
 
 ## 可选增强
 
